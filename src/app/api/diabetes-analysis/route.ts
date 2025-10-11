@@ -97,7 +97,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<DiabetesAnaly
 /**
  * Analyze diabetes parameters using Python RandomForest model
  */
-async function analyzeDiabetesParameters(manualValues: any): Promise<{ predicted_class: string; confidence: number }> {
+async function analyzeDiabetesParameters(manualValues: Record<string, string>): Promise<{ predicted_class: string; confidence: number }> {
   return new Promise((resolve, reject) => {
     console.log(`🐍 Calling Python diabetes model for parameters`);
 

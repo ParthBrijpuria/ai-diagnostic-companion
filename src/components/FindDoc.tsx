@@ -73,7 +73,7 @@ const FindDoc: React.FC<FindDocProps> = ({ initialSymptoms = '' }) => {
     if (initialSymptoms && initialSymptoms !== symptoms) {
       setSymptoms(initialSymptoms);
     }
-  }, [initialSymptoms]);
+  }, [initialSymptoms, symptoms]);
 
   // Auto-resize textarea
   useEffect(() => {

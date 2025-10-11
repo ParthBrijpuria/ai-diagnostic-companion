@@ -7,10 +7,10 @@ import axios from 'axios';
 
 // Define interfaces
 export interface MLInput {
-  extracted_values: Record<string, any>;
+  extracted_values: Record<string, string | number>;
   symptoms: string;
   model_type: string;
-  image_data?: any; // Added for image processing
+  image_data?: string; // Added for image processing
 }
 
 export interface MLPrediction {
@@ -31,7 +31,7 @@ const ML_SERVICE_CONFIG = {
 /**
  * Analyze test values using ML models
  */
-export async function analyzeWithML(extractedValues: Record<string, any>, symptoms: string, modelType: string): Promise<MLPrediction> {
+export async function analyzeWithML(extractedValues: Record<string, string | number>, symptoms: string, modelType: string): Promise<MLPrediction> {
   console.log(`🤖 Sending data to ML service for analysis`);
   
   try {
@@ -77,7 +77,7 @@ export async function analyzeWithML(extractedValues: Record<string, any>, sympto
 /**
  * Determine which ML model to use based on available data
  */
-function determineModelType(extractedValues: Record<string, any>, symptoms: string): string {
+function determineModelType(extractedValues: Record<string, string | number>, symptoms: string): string {
   const symptomsLower = symptoms.toLowerCase();
   
   // Check for diabetes-related symptoms and values
@@ -117,7 +117,7 @@ function determineModelType(extractedValues: Record<string, any>, symptoms: stri
 /**
  * Generate fallback prediction using rule-based logic
  */
-function generateFallbackPrediction(extractedValues: Record<string, any>, symptoms: string, modelType: string): MLPrediction {
+function generateFallbackPrediction(extractedValues: Record<string, string | number>, symptoms: string, modelType: string): MLPrediction {
   console.log("🔄 Using fallback rule-based prediction");
   
   const symptomsLower = symptoms.toLowerCase();

@@ -9,9 +9,9 @@ import path from 'path';
 import fs from 'fs';
 
 // Define interfaces
-interface MRIAnalysisRequest {
-  file: File;
-}
+// interface MRIAnalysisRequest {
+//   file: File;
+// }
 
 interface MRIAnalysisResponse {
   predicted_class: string;

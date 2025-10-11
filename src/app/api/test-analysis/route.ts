@@ -32,7 +32,7 @@ interface TestAnalysisResponse {
   }>;
   lifestyle_changes: string;
   analysis_type: 'file' | 'manual';
-  extracted_values?: Record<string, any>;
+  extracted_values?: Record<string, string | number>;
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisResponse | { error: string }>> {
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisR
 
     console.log(`🔍 Processing ${analysisData.file ? 'file upload' : 'manual values'} analysis`);
 
-    let extractedValues: Record<string, any> = {};
+    let extractedValues: Record<string, string | number> = {};
     let analysisType: 'file' | 'manual' = 'manual';
 
     if (analysisData.file) {
@@ -110,7 +110,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisR
             status: metric.status
           };
           return acc;
-        }, {} as Record<string, any>);
+        }, {} as Record<string, { value: string; unit: string; status: string }>);
         
         // Store the extracted text for Gemini analysis
         extractedValues.extracted_text = extractedData.text;

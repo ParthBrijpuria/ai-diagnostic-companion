@@ -93,13 +93,13 @@ const ForwardIcon: FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-const UploadIcon: FC<{ className?: string }> = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-    <polyline points="7,10 12,15 17,10"/>
-    <line x1="12" y1="15" x2="12" y2="3"/>
-  </svg>
-);
+// const UploadIcon: FC<{ className?: string }> = ({ className }) => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+//     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+//     <polyline points="7,10 12,15 17,10"/>
+//     <line x1="12" y1="15" x2="12" y2="3"/>
+//   </svg>
+// );
 
 const CheckCircleIcon: FC<{ className?: string }> = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -109,13 +109,13 @@ const CheckCircleIcon: FC<{ className?: string }> = ({ className }) => (
 );
 
 // --- Loading Skeleton Components ---
-const SkeletonCard: FC<{ className?: string }> = ({ className }) => (
-  <div className={`animate-pulse bg-gray-200 rounded-2xl ${className}`}></div>
-);
+// const SkeletonCard: FC<{ className?: string }> = ({ className }) => (
+//   <div className={`animate-pulse bg-gray-200 rounded-2xl ${className}`}></div>
+// );
 
-const SkeletonText: FC<{ width?: string; className?: string }> = ({ width = "w-full", className }) => (
-  <div className={`h-4 bg-gray-200 rounded ${width} ${className}`}></div>
-);
+// const SkeletonText: FC<{ width?: string; className?: string }> = ({ width = "w-full", className }) => (
+//   <div className={`h-4 bg-gray-200 rounded ${width} ${className}`}></div>
+// );
 
 // --- Main Page Component ---
 export default function DiagnosticPage() {
@@ -125,20 +125,20 @@ export default function DiagnosticPage() {
   const [result, setResult] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  // const [isTyping, setIsTyping] = useState(false);
   const [activeTab, setActiveTab] = useState<'symptoms' | 'reports' | 'finddoc'>('symptoms');
   const [storedSymptoms, setStoredSymptoms] = useState('');
-  const [manualValues, setManualValues] = useState({
+  const [manualValues] = useState({
     bloodPressure: '',
     bloodSugar: '',
     cholesterol: '',
     bmi: ''
   });
-  const [testAnalysis, setTestAnalysis] = useState<any>(null);
+  const [testAnalysis, setTestAnalysis] = useState<{ disease_name: string; confidence: number; future_steps: string; top_medicines: Array<{ name: string; description: string }>; lifestyle_changes: string; analysis_type: 'file' | 'manual'; extracted_values?: Record<string, string | number> } | null>(null);
   const [testLoading, setTestLoading] = useState(false);
   const [overallUploadedFile, setOverallUploadedFile] = useState<File | null>(null);
-  const [overallTestLoading, setOverallTestLoading] = useState(false);
-  const [overallTestAnalysis, setOverallTestAnalysis] = useState<any>(null);
+  // const [overallTestLoading, setOverallTestLoading] = useState(false);
+  const [overallTestAnalysis, setOverallTestAnalysis] = useState<{ predicted_disease: string; confidence: number; key_indicators: string[]; extracted_metrics: Record<string, string | number>; analysis_summary: string } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -169,7 +169,7 @@ export default function DiagnosticPage() {
     setLoading(true);
     setError('');
     setResult(null);
-    setIsTyping(false);
+    // setIsTyping(false);
 
     try {
       const response = await fetch('/api/diagnose', {
@@ -199,70 +199,70 @@ export default function DiagnosticPage() {
   };
 
   // Handle test file upload
-  const handleTestUpload = async (e: React.ChangeEvent<HTMLInputElement>, modelType: string) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  // const handleTestUpload = async (e: React.ChangeEvent<HTMLInputElement>, modelType: string) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
 
-    setTestLoading(true);
-    setError('');
+  //   setTestLoading(true);
+  //   setError('');
 
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('symptoms', symptoms);
-      formData.append('duration', duration);
-      formData.append('modelType', modelType);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  //     formData.append('symptoms', symptoms);
+  //     formData.append('duration', duration);
+  //     formData.append('modelType', modelType);
 
-      const response = await fetch('/api/test-analysis', {
-        method: 'POST',
-        body: formData,
-      });
+  //     const response = await fetch('/api/test-analysis', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Test analysis failed');
-      }
+  //     if (!response.ok) {
+  //       throw new Error(data.error || 'Test analysis failed');
+  //     }
 
-      setTestAnalysis(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred during test analysis');
-    } finally {
-      setTestLoading(false);
-    }
-  };
+  //     setTestAnalysis(data);
+  //   } catch (err) {
+  //     setError(err instanceof Error ? err.message : 'An error occurred during test analysis');
+  //   } finally {
+  //     setTestLoading(false);
+  //   }
+  // };
 
   // Handle manual values submission
-  const handleManualSubmit = async () => {
-    setTestLoading(true);
-    setError('');
+  // const handleManualSubmit = async () => {
+  //   setTestLoading(true);
+  //   setError('');
 
-    try {
-      const response = await fetch('/api/test-analysis', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          manualValues,
-          symptoms,
-          duration
-        }),
-      });
+  //   try {
+  //     const response = await fetch('/api/test-analysis', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         manualValues,
+  //         symptoms,
+  //         duration
+  //       }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Manual analysis failed');
-      }
+  //     if (!response.ok) {
+  //       throw new Error(data.error || 'Manual analysis failed');
+  //     }
 
-      setTestAnalysis(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred during manual analysis');
-    } finally {
-      setTestLoading(false);
-    }
-  };
+  //     setTestAnalysis(data);
+  //   } catch (err) {
+  //     setError(err instanceof Error ? err.message : 'An error occurred during manual analysis');
+  //   } finally {
+  //     setTestLoading(false);
+  //   }
+  // };
 
   // Get probability color styling
   const getProbabilityColor = (probability: string) => {
@@ -279,59 +279,59 @@ export default function DiagnosticPage() {
   };
 
   // Handle overall test file upload
-  const handleOverallTestUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  // const handleOverallTestUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (!file) return;
 
-    // Validate file type
-    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
-    if (!allowedTypes.includes(file.type)) {
-      setError('Invalid file type. Please upload a PDF or image file.');
-      return;
-    }
+  //   // Validate file type
+  //   const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+  //   if (!allowedTypes.includes(file.type)) {
+  //     setError('Invalid file type. Please upload a PDF or image file.');
+  //     return;
+  //   }
 
-    // Validate file size (10MB max)
-    const maxSize = 10 * 1024 * 1024;
-    if (file.size > maxSize) {
-      setError('File too large. Please upload a file smaller than 10MB.');
-      return;
-    }
+  //   // Validate file size (10MB max)
+  //   const maxSize = 10 * 1024 * 1024;
+  //   if (file.size > maxSize) {
+  //     setError('File too large. Please upload a file smaller than 10MB.');
+  //     return;
+  //   }
 
-    setOverallUploadedFile(file);
-    setError('');
-  };
+  //   setOverallUploadedFile(file);
+  //   setError('');
+  // };
 
   // Handle overall test analysis
-  const handleOverallAnalysis = async () => {
-    if (!overallUploadedFile) return;
+  // const handleOverallAnalysis = async () => {
+  //   if (!overallUploadedFile) return;
 
-    setOverallTestLoading(true);
-    setError('');
+  //   setOverallTestLoading(true);
+  //   setError('');
 
-    try {
-      const formData = new FormData();
-      formData.append('file', overallUploadedFile);
-      formData.append('symptoms', symptoms);
-      formData.append('duration', duration);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', overallUploadedFile);
+  //     formData.append('symptoms', symptoms);
+  //     formData.append('duration', duration);
 
-      const response = await fetch('/api/test-analysis', {
-        method: 'POST',
-        body: formData,
-      });
+  //     const response = await fetch('/api/test-analysis', {
+  //       method: 'POST',
+  //       body: formData,
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Test analysis failed');
-      }
+  //     if (!response.ok) {
+  //       throw new Error(data.error || 'Test analysis failed');
+  //     }
 
-      setOverallTestAnalysis(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred during test analysis');
-    } finally {
-      setOverallTestLoading(false);
-    }
-  };
+  //     setOverallTestAnalysis(data);
+  //   } catch (err) {
+  //     setError(err instanceof Error ? err.message : 'An error occurred during test analysis');
+  //   } finally {
+  //     setOverallTestLoading(false);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
@@ -438,12 +438,12 @@ export default function DiagnosticPage() {
                 value={symptoms}
                     onChange={(e) => {
                       setSymptoms(e.target.value);
-                      setIsTyping(true);
+                      // setIsTyping(true);
                     }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
-                        handleSubmit(e as any);
+                        handleSubmit(e as React.FormEvent);
                       }
                     }}
                     placeholder="Describe your symptoms in detail... (e.g., 'I have been experiencing chest pain for 3 days, shortness of breath, and fatigue. The pain is sharp and worsens with deep breathing.')"
@@ -516,7 +516,7 @@ export default function DiagnosticPage() {
                     type="text"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
-                    placeholder="e.g., '3 days', '2 weeks', '1 month', '6 months'"
+                    placeholder="e.g., &apos;3 days&apos;, &apos;2 weeks&apos;, &apos;1 month&apos;, &apos;6 months&apos;"
                     className="input-medical"
                 disabled={loading}
               />
@@ -821,7 +821,7 @@ export default function DiagnosticPage() {
                           Top Medicines (Priority Order)
                         </h4>
                         <div className="grid gap-4">
-                          {testAnalysis.top_medicines.map((medicine: any, index: number) => (
+                          {testAnalysis.top_medicines.map((medicine: { name: string; description: string }, index: number) => (
                             <div key={index} className="flex items-center p-4 bg-purple-50 rounded-xl border border-purple-200">
                               <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
                                 {index + 1}
@@ -955,7 +955,7 @@ export default function DiagnosticPage() {
                       Recommended Medications
                     </h4>
                     <div className="grid gap-4">
-                      {overallTestAnalysis.top_medicines.map((medicine: any, index: number) => (
+                      {overallTestAnalysis.top_medicines.map((medicine: { name: string; description: string }, index: number) => (
                         <div key={index} className="flex items-center p-4 bg-blue-50 rounded-xl border border-blue-200">
                           <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
                             {index + 1}

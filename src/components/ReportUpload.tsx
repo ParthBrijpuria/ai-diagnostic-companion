@@ -5,7 +5,7 @@
 
 'use client';
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { FC } from 'react';
 
 // Define interfaces
@@ -779,7 +779,7 @@ export default function ReportUpload() {
                 Top Medicines (Priority Order)
               </h4>
               <div className="grid gap-4">
-                {analysis.top_medicines.map((medicine: any, index: number) => (
+                {analysis.top_medicines.map((medicine: { name: string; description: string }, index: number) => (
                   <div key={index} className="flex items-center p-4 bg-purple-50 rounded-xl border border-purple-200">
                     <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
                       {index + 1}

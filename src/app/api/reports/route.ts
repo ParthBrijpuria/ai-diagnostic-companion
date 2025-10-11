@@ -4,22 +4,22 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import formidable from 'formidable';
-import fs from 'fs';
-import path from 'path';
+// import formidable from 'formidable';
+// import fs from 'fs';
+// import path from 'path';
 import { parsePDF } from '@/services/reportParser';
 import { predictDisease } from '@/services/mlService';
 
 // Define interfaces for type safety
-interface ReportAnalysisRequest {
-  file?: File;
-}
+// interface ReportAnalysisRequest {
+//   file?: File;
+// }
 
 interface ReportAnalysisResponse {
   predicted_disease: string;
   confidence: number;
   key_indicators: string[];
-  extracted_metrics: Record<string, any>;
+  extracted_metrics: Record<string, string | number>;
   analysis_summary: string;
 }
 
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ReportAnalysi
           reference_range: metric.reference_range
         };
         return acc;
-      }, {} as Record<string, any>),
+      }, {} as Record<string, { value: string; status: string; reference_range: string }>),
       analysis_summary: mlPrediction.analysis_summary
     };
 

@@ -4,7 +4,7 @@
  */
 
 import { PDFParse } from 'pdf-parse';
-import sharp from 'sharp';
+// import sharp from 'sharp';
 
 // Define interfaces for extracted data
 export interface HealthMetric {
@@ -229,7 +229,7 @@ function extractHealthMetrics(text: string): HealthMetric[] {
 /**
  * Determine the status of a lab value (normal, high, low, critical)
  */
-function determineStatus(value: number, config: any): HealthMetric['status'] {
+function determineStatus(value: number, config: { critical_low: number; critical_high: number; normal_range: { min: number; max: number } }): HealthMetric['status'] {
   if (value < config.critical_low || value > config.critical_high) {
     return 'critical';
   } else if (value < config.normal_range.min) {
@@ -250,7 +250,7 @@ export function extractReportContext(text: string): {
   report_date?: string;
   lab_name?: string;
 } {
-  const context: any = {};
+  const context: Record<string, string | number> = {};
 
   // Extract age
   const ageMatch = text.match(/(?:age|aged?)\s*:?\s*(\d+)/i);

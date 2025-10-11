@@ -9,9 +9,9 @@ import path from 'path';
 import fs from 'fs';
 
 // Define interfaces
-interface XRayAnalysisRequest {
-  file: File;
-}
+// interface XRayAnalysisRequest {
+//   file: File;
+// }
 
 interface XRayAnalysisResponse {
   predicted_class: string;

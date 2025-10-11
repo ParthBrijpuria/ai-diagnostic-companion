@@ -87,7 +87,7 @@ function generateFallbackPrediction(input: MLInput): MLPrediction {
   console.log("🔄 Using fallback rule-based prediction");
   
   const metrics = input.metrics;
-  const text = input.text.toLowerCase();
+  // const text = input.text.toLowerCase();
   
   // Rule-based disease prediction based on lab values
   const predictions: Array<{ disease: string; confidence: number; indicators: string[] }> = [];
@@ -95,7 +95,7 @@ function generateFallbackPrediction(input: MLInput): MLPrediction {
   // Anemia detection
   const hemoglobin = metrics.find(m => m.name === 'HEMOGLOBIN');
   const hematocrit = metrics.find(m => m.name === 'HEMATOCRIT');
-  const rbc = metrics.find(m => m.name === 'RBC');
+  // const rbc = metrics.find(m => m.name === 'RBC');
   
   if (hemoglobin && typeof hemoglobin.value === 'number' && hemoglobin.value < 12) {
     predictions.push({
