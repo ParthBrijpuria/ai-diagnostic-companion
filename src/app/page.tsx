@@ -128,17 +128,17 @@ export default function DiagnosticPage() {
   // const [isTyping, setIsTyping] = useState(false);
   const [activeTab, setActiveTab] = useState<'symptoms' | 'reports' | 'finddoc'>('symptoms');
   const [storedSymptoms, setStoredSymptoms] = useState('');
-  const [manualValues] = useState({
-    bloodPressure: '',
-    bloodSugar: '',
-    cholesterol: '',
-    bmi: ''
-  });
-  const [testAnalysis, setTestAnalysis] = useState<{ disease_name: string; confidence: number; future_steps: string; top_medicines: Array<{ name: string; description: string }>; lifestyle_changes: string; analysis_type: 'file' | 'manual'; extracted_values?: Record<string, string | number> } | null>(null);
-  const [testLoading, setTestLoading] = useState(false);
-  const [overallUploadedFile, setOverallUploadedFile] = useState<File | null>(null);
+  // const [manualValues] = useState({
+  //   bloodPressure: '',
+  //   bloodSugar: '',
+  //   cholesterol: '',
+  //   bmi: ''
+  // });
+  const [testAnalysis] = useState<{ disease_name: string; confidence: number; future_steps: string; top_medicines: Array<{ name: string; description: string }>; lifestyle_changes: string; analysis_type: 'file' | 'manual'; extracted_values?: Record<string, string | number> } | null>(null);
+  // const [testLoading, setTestLoading] = useState(false);
+  // const [overallUploadedFile, setOverallUploadedFile] = useState<File | null>(null);
   // const [overallTestLoading, setOverallTestLoading] = useState(false);
-  const [overallTestAnalysis, setOverallTestAnalysis] = useState<{ predicted_disease: string; confidence: number; key_indicators: string[]; extracted_metrics: Record<string, string | number>; analysis_summary: string } | null>(null);
+  const [overallTestAnalysis] = useState<{ predicted_disease: string; confidence: number; key_indicators: string[]; extracted_metrics: Record<string, { value: string; unit: string; status: string; reference_range: string }>; analysis_summary: string } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -521,7 +521,7 @@ export default function DiagnosticPage() {
                 disabled={loading}
               />
                   <div className="text-sm text-gray-500 mt-2">
-                    Specify how long you've been experiencing these symptoms
+                    Specify how long you&apos;ve been experiencing these symptoms
                   </div>
                 </div>
 
@@ -666,7 +666,7 @@ export default function DiagnosticPage() {
                     </div>
                   </div>
                   <div className="grid gap-6">
-                    {result.possible_diseases.slice(0, 5).map((disease, index) => (
+                    {result.possible_diseases.slice(0, 5).map((disease) => (
                       <div key={disease.name} className="group p-6 bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl border border-gray-200 hover:shadow-lg transition-all duration-300 hover:border-medical-200">
                         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                           <h4 className="font-bold text-xl text-gray-900 mb-2 lg:mb-0 group-hover:text-medical-700 transition-colors">
@@ -698,7 +698,7 @@ export default function DiagnosticPage() {
                     </div>
                   </div>
                   <div className="grid gap-6">
-                    {result.recommended_tests.map((test, index) => (
+                    {result.recommended_tests.map((test) => (
                       <div key={test.test} className="group p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-200 hover:shadow-lg transition-all duration-300 hover:border-green-300">
                         <h4 className="font-bold text-xl text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
                           {test.test}
@@ -853,7 +853,7 @@ export default function DiagnosticPage() {
                 )}
 
                 {/* Test Loading State */}
-                {testLoading && (
+                {false && (
                   <div className="card-medical mb-8 animate-fade-in">
                     <div className="text-center py-12">
                       <LoaderIcon className="h-16 w-16 text-medical-500 mx-auto mb-6 animate-spin" />
@@ -908,7 +908,7 @@ export default function DiagnosticPage() {
                       Analysis Result
                     </h4>
                     <div className="text-3xl font-bold text-purple-700 mb-2">
-                      {overallTestAnalysis.disease_name}
+                      {overallTestAnalysis.predicted_disease}
                     </div>
                     <div className="text-lg text-gray-600 mb-4">
                       Confidence: {(overallTestAnalysis.confidence * 100).toFixed(1)}%

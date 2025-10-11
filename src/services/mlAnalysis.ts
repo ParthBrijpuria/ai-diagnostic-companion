@@ -31,7 +31,7 @@ const ML_SERVICE_CONFIG = {
 /**
  * Analyze test values using ML models
  */
-export async function analyzeWithML(extractedValues: Record<string, string | number>, symptoms: string, modelType: string): Promise<MLPrediction> {
+export async function analyzeWithML(extractedValues: Record<string, string | number | { value: string; unit: string; status: string }>, symptoms: string, modelType: string): Promise<MLPrediction> {
   console.log(`🤖 Sending data to ML service for analysis`);
   
   try {
@@ -77,7 +77,7 @@ export async function analyzeWithML(extractedValues: Record<string, string | num
 /**
  * Determine which ML model to use based on available data
  */
-function determineModelType(extractedValues: Record<string, string | number>, symptoms: string): string {
+function determineModelType(extractedValues: Record<string, string | number | { value: string; unit: string; status: string }>, symptoms: string): string {
   const symptomsLower = symptoms.toLowerCase();
   
   // Check for diabetes-related symptoms and values
@@ -117,7 +117,7 @@ function determineModelType(extractedValues: Record<string, string | number>, sy
 /**
  * Generate fallback prediction using rule-based logic
  */
-function generateFallbackPrediction(extractedValues: Record<string, string | number>, symptoms: string, modelType: string): MLPrediction {
+function generateFallbackPrediction(extractedValues: Record<string, string | number | { value: string; unit: string; status: string }>, symptoms: string, modelType: string): MLPrediction {
   console.log("🔄 Using fallback rule-based prediction");
   
   const symptomsLower = symptoms.toLowerCase();

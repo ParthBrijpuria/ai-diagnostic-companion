@@ -19,7 +19,7 @@ interface ReportAnalysisResponse {
   predicted_disease: string;
   confidence: number;
   key_indicators: string[];
-  extracted_metrics: Record<string, string | number>;
+  extracted_metrics: Record<string, { value: string; unit: string; status: string; reference_range: string }>;
   analysis_summary: string;
 }
 
@@ -105,13 +105,13 @@ export async function POST(req: NextRequest): Promise<NextResponse<ReportAnalysi
       key_indicators: mlPrediction.key_indicators,
       extracted_metrics: extractedData.metrics.reduce((acc, metric) => {
         acc[metric.name] = {
-          value: metric.value,
+          value: String(metric.value),
           unit: metric.unit,
           status: metric.status,
           reference_range: metric.reference_range
         };
         return acc;
-      }, {} as Record<string, { value: string; status: string; reference_range: string }>),
+      }, {} as Record<string, { value: string; unit: string; status: string; reference_range: string }>),
       analysis_summary: mlPrediction.analysis_summary
     };
 

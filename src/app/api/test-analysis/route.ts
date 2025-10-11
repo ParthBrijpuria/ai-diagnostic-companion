@@ -32,7 +32,7 @@ interface TestAnalysisResponse {
   }>;
   lifestyle_changes: string;
   analysis_type: 'file' | 'manual';
-  extracted_values?: Record<string, string | number>;
+  extracted_values?: Record<string, string | number | { value: string; unit: string; status: string }>;
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisResponse | { error: string }>> {
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisR
 
     console.log(`🔍 Processing ${analysisData.file ? 'file upload' : 'manual values'} analysis`);
 
-    let extractedValues: Record<string, string | number> = {};
+    let extractedValues: Record<string, string | number | { value: string; unit: string; status: string }> = {};
     let analysisType: 'file' | 'manual' = 'manual';
 
     if (analysisData.file) {
@@ -105,7 +105,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisR
         
         extractedValues = extractedData.metrics.reduce((acc, metric) => {
           acc[metric.name.toLowerCase()] = {
-            value: metric.value,
+            value: String(metric.value),
             unit: metric.unit,
             status: metric.status
           };
