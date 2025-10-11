@@ -929,43 +929,41 @@ export default function DiagnosticPage() {
                   </h4>
                   <div className="bg-red-50 rounded-xl p-6 border border-red-200">
                     <p className="text-red-800 leading-relaxed">
-                      {overallTestAnalysis.future_steps || "Please consult a healthcare professional for proper evaluation."}
+                      {overallTestAnalysis.analysis_summary || "Please consult a healthcare professional for proper evaluation."}
                     </p>
                   </div>
           </div>
           
                 {/* Lifestyle Changes */}
-                {overallTestAnalysis.lifestyle_changes && (
+                {false && (
                   <div className="mb-8">
                     <h4 className="text-xl font-bold text-gray-800 mb-4">
                       Recommended Lifestyle Changes
                     </h4>
                     <div className="bg-yellow-50 rounded-xl p-6 border border-yellow-200">
                       <p className="text-yellow-800 leading-relaxed">
-                        {overallTestAnalysis.lifestyle_changes}
+                        Lifestyle recommendations would appear here
                       </p>
                     </div>
                   </div>
                 )}
 
                 {/* Top Medicines */}
-                {overallTestAnalysis.top_medicines && overallTestAnalysis.top_medicines.length > 0 && (
+                {false && (
                   <div className="mb-8">
                     <h4 className="text-xl font-bold text-gray-800 mb-4">
                       Recommended Medications
                     </h4>
                     <div className="grid gap-4">
-                      {overallTestAnalysis.top_medicines.map((medicine: { name: string; description: string }, index: number) => (
-                        <div key={index} className="flex items-center p-4 bg-blue-50 rounded-xl border border-blue-200">
-                          <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
-                            {index + 1}
-                          </div>
-                          <div>
-                            <div className="font-semibold text-blue-900">{medicine.name}</div>
-                            <div className="text-sm text-blue-700">{medicine.description}</div>
-                          </div>
+                      <div className="flex items-center p-4 bg-blue-50 rounded-xl border border-blue-200">
+                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4">
+                          1
                         </div>
-                      ))}
+                        <div>
+                          <div className="font-semibold text-blue-900">Sample Medication</div>
+                          <div className="text-sm text-blue-700">Medication recommendations would appear here</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
