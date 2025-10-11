@@ -370,7 +370,51 @@ export default function DiagnosticPage() {
 
       {/* Tab Navigation */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-xl">
+        {/* Mobile Layout: Stacked tabs */}
+        <div className="flex flex-col space-y-2 sm:hidden">
+          <button
+            onClick={() => setActiveTab('symptoms')}
+            className={`w-full py-3 px-6 rounded-lg font-medium transition-all duration-200 ${
+              activeTab === 'symptoms'
+                ? 'bg-white text-medical-600 shadow-sm border-2 border-medical-200'
+                : 'bg-gray-100 text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <StethoscopeIcon className="h-5 w-5" />
+              <span>Symptom Analysis</span>
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('reports')}
+            className={`w-full py-3 px-6 rounded-lg font-medium transition-all duration-200 ${
+              activeTab === 'reports'
+                ? 'bg-white text-medical-600 shadow-sm border-2 border-medical-200'
+                : 'bg-gray-100 text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <ClipboardIcon className="h-5 w-5" />
+              <span>Report Upload</span>
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('finddoc')}
+            className={`w-full py-3 px-6 rounded-lg font-medium transition-all duration-200 ${
+              activeTab === 'finddoc'
+                ? 'bg-white text-medical-600 shadow-sm border-2 border-medical-200'
+                : 'bg-gray-100 text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            <div className="flex items-center justify-center space-x-2">
+              <MagnifyingGlassIcon className="h-5 w-5" />
+              <span>Find a Doc</span>
+            </div>
+          </button>
+        </div>
+        
+        {/* Desktop Layout: Horizontal tabs */}
+        <div className="hidden sm:flex space-x-1 bg-gray-100 p-1 rounded-xl">
           <button
             onClick={() => setActiveTab('symptoms')}
             className={`flex-1 py-3 px-6 rounded-lg font-medium transition-all duration-200 ${
