@@ -266,7 +266,7 @@ For support, email [support@ai-diagnostic-companion.com](mailto:support@ai-diagn
 
 ## 🔗 Links
 
-- **Live Demo**: [https://ai-diagnostic-companion.vercel.app](https://ai-diagnostic-companion.vercel.app)
+- **Live Demo**: [https://ai-diagnostic-companion.vercel.app](https://ai-diagnostic-companion.vercel.app)(however some features may not work in the demo live sit)
 - **Documentation**: [https://github.com/ParthBrijpuria/ai-diagnostic-companion/wiki](https://github.com/ParthBrijpuria/ai-diagnostic-companion/wiki)
 - **Issues**: [https://github.com/ParthBrijpuria/ai-diagnostic-companion/issues](https://github.com/ParthBrijpuria/ai-diagnostic-companion/issues)
 
