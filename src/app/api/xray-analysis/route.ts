@@ -128,14 +128,10 @@ import os
 sys.path.append('.')
 
 try:
-    from models.xray.xray_pneumonia_classifier import XRayPneumoniaClassifier
+    from models.xray.xray_enhanced_predict import predict_xray_image
     
-    # Initialize and load the model
-    classifier = XRayPneumoniaClassifier()
-    classifier.load_model('models/xray/xray_pneumonia_model.pkl')
-    
-    # Make prediction
-    result = classifier.predict('${imagePath.replace(/\\/g, '\\\\')}')
+    # Make prediction using the enhanced model
+    result = predict_xray_image('${imagePath.replace(/\\/g, '\\\\')}')
     
     import json
     print(json.dumps(result))

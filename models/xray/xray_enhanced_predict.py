@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enhanced MRI prediction using the improved model
+Enhanced X-ray prediction using the gradient boosting model
 """
 
 import sys
@@ -9,18 +9,13 @@ import numpy as np
 import joblib
 import json
 
-def extract_features_enhanced(img_array):
-    """Enhanced feature extraction"""
+def extract_features_quick(img_array):
+    """Quick feature extraction matching the quick model"""
     img = img_array.reshape(64, 64)
     
     # Basic features
     basic_features = [
         np.mean(img), np.std(img), np.min(img), np.max(img), np.median(img)
-    ]
-    
-    # Advanced statistical features
-    advanced_features = [
-        np.var(img), np.ptp(img), np.percentile(img, 25), np.percentile(img, 75), np.percentile(img, 90)
     ]
     
     # Texture features
@@ -41,25 +36,17 @@ def extract_features_enhanced(img_array):
     except:
         texture_features = [0] * 8
     
-    # Histogram features
-    hist = cv2.calcHist([img_uint8], [0], None, [16], [0, 256])
-    hist_features = hist.flatten()
-    
-    # Edge features
-    edges = cv2.Canny(img_uint8, 50, 150)
-    edge_density = np.sum(edges > 0) / (64 * 64)
-    
     # Pixel features
-    pixel_features = img_array[:200]
+    pixel_features = img_array[:100]
     
-    feature_vector = basic_features + advanced_features + texture_features + hist_features.tolist() + [edge_density] + pixel_features.tolist()
+    feature_vector = basic_features + texture_features + pixel_features.tolist()
     return np.array(feature_vector)
 
-def predict_mri_image(image_path):
-    """Predict MRI image class using the enhanced model"""
+def predict_xray_image(image_path):
+    """Predict X-ray image class using the gradient boosting model"""
     try:
         # Load model
-        model_data = joblib.load('models/mri/mri_quick_v2_model.pkl')
+        model_data = joblib.load('models/xray/xray_quick_model.pkl')
         model = model_data['model']
         scaler = model_data['scaler']
         feature_selector = model_data['feature_selector']
@@ -75,7 +62,7 @@ def predict_mri_image(image_path):
         img_flat = img_normalized.flatten()
         
         # Extract features
-        features = extract_features_enhanced(img_flat)
+        features = extract_features_quick(img_flat)
         
         # Scale and select features
         features_scaled = scaler.transform(features.reshape(1, -1))
@@ -107,11 +94,11 @@ def predict_mri_image(image_path):
 
 def main():
     if len(sys.argv) != 2:
-        print(json.dumps({"error": "Usage: python mri_enhanced_predict.py <image_path>"}))
+        print(json.dumps({"error": "Usage: python xray_enhanced_predict.py <image_path>"}))
         sys.exit(1)
     
     image_path = sys.argv[1]
-    result = predict_mri_image(image_path)
+    result = predict_xray_image(image_path)
     print(json.dumps(result))
 
 if __name__ == "__main__":

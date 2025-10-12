@@ -128,14 +128,10 @@ import os
 sys.path.append('.')
 
 try:
-    from models.mri.mri_improved_classifier import ImprovedMRIClassifier
+    from models.mri.mri_enhanced_predict import predict_mri_image
     
-    # Initialize and load the improved model
-    classifier = ImprovedMRIClassifier()
-    classifier.load_model('models/mri/mri_improved_model.pkl')
-    
-    # Make prediction
-    result = classifier.predict('${imagePath.replace(/\\/g, '\\\\')}')
+    # Make prediction using the enhanced model
+    result = predict_mri_image('${imagePath.replace(/\\/g, '\\\\')}')
     
     import json
     print(json.dumps(result))
