@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-// import { spawn } from 'child_process';
-// import path from 'path';
-// import fs from 'fs';
+import { spawn } from 'child_process';
+import path from 'path';
+import fs from 'fs';
 
 // Define interfaces
 // interface XRayAnalysisRequest {
@@ -56,22 +56,36 @@ export async function POST(req: NextRequest): Promise<NextResponse<XRayAnalysisR
 
     console.log(`🔍 Processing X-ray image: ${file.name}`);
 
-    // Simulate X-ray analysis (Vercel doesn't support file system operations)
-    // Generate mock prediction based on file characteristics
-    const mockPrediction = {
-      predicted_class: Math.random() > 0.3 ? 'Normal' : 'Pneumonia',
-      confidence: 0.80 + Math.random() * 0.15 // Random confidence between 80-95%
-    };
+    // Create temporary file
+    const tempDir = path.join(process.cwd(), 'temp');
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
+    }
 
-    console.log(`📊 Mock analysis complete for: ${file.name}`);
+    const tempFilePath = path.join(tempDir, `xray_${Date.now()}_${file.name}`);
+    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    fs.writeFileSync(tempFilePath, fileBuffer);
+
+    console.log(`📁 Temporary file created: ${tempFilePath}`);
+
+    // Call Python X-ray model
+    const prediction = await analyzeXRayImage(tempFilePath);
+
+    // Clean up temporary file
+    try {
+      fs.unlinkSync(tempFilePath);
+      console.log(`🗑️ Temporary file deleted: ${tempFilePath}`);
+    } catch (cleanupError) {
+      console.warn(`⚠️ Failed to delete temporary file: ${cleanupError}`);
+    }
 
     const response: XRayAnalysisResponse = {
-      predicted_class: mockPrediction.predicted_class,
-      confidence: mockPrediction.confidence,
+      predicted_class: prediction.predicted_class,
+      confidence: prediction.confidence,
       analysis_type: 'xray_image'
     };
 
-    console.log(`✅ X-ray analysis complete: ${mockPrediction.predicted_class} (${(mockPrediction.confidence * 100).toFixed(1)}%)`);
+    console.log(`✅ X-ray analysis complete: ${prediction.predicted_class} (${(prediction.confidence * 100).toFixed(1)}%)`);
 
     return NextResponse.json(response);
 
@@ -101,10 +115,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<XRayAnalysisR
 }
 
 /**
- * Analyze X-ray image using Python GradientBoosting model (commented out for Vercel deployment)
- * Vercel doesn't support Python execution, so we use mock responses
+ * Analyze X-ray image using Python GradientBoosting model
  */
-/*
 async function analyzeXRayImage(imagePath: string): Promise<{ predicted_class: string; confidence: number }> {
   return new Promise((resolve, reject) => {
     console.log(`🐍 Calling Python X-ray model for: ${imagePath}`);
@@ -189,7 +201,6 @@ except Exception as e:
     }, 30000); // 30 second timeout
   });
 }
-*/
 
 // Health check endpoint
 export async function GET(): Promise<NextResponse<{ status: string; service: string }>> {
