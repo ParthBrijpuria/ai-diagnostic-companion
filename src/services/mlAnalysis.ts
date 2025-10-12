@@ -24,8 +24,8 @@ export interface MLPrediction {
 // Configuration for ML service
 const ML_SERVICE_CONFIG = {
   baseUrl: process.env.ML_SERVICE_URL || 'http://localhost:5000',
-  timeout: 30000,
-  retries: 3
+  timeout: 5000, // Reduced timeout for Vercel (5 seconds)
+  retries: 1 // Reduced retries for faster fallback
 };
 
 /**
@@ -33,6 +33,12 @@ const ML_SERVICE_CONFIG = {
  */
 export async function analyzeWithML(extractedValues: Record<string, string | number | { value: string; unit: string; status: string }>, symptoms: string, modelType: string): Promise<MLPrediction> {
   console.log(`🤖 Sending data to ML service for analysis`);
+  
+  // Skip ML service call on Vercel (production) and use fallback directly
+  if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+    console.log(`🚀 Production environment detected, using fallback prediction`);
+    return generateFallbackPrediction(extractedValues, symptoms, modelType);
+  }
   
   try {
     // Determine which ML model to use based on symptoms and available values
