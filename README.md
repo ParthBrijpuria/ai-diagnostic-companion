@@ -123,7 +123,6 @@ ai-diagnostic-companion/
 
 ### Environment Variables
 - `GEMINI_API_KEY`: Google Gemini API key for general analysis
-- `GEMINI_PRO_API_KEY`: Google Gemini Pro API key for advanced analysis
 - `PYTHON_EXECUTABLE`: Python executable path (optional, defaults to 'python')
 
 ### Model Configuration
@@ -134,12 +133,12 @@ ai-diagnostic-companion/
 ## 📊 Model Performance
 
 ### MRI Brain Scan Analysis
-- **Overall Accuracy**: 95%+
+- **Overall Accuracy**: Nearly 80%(on test set)
 - **Categories**: Glioma, Meningioma, Pituitary, No Tumor
 - **Model**: Ensemble classifier with multiple algorithms
 
 ### Chest X-Ray Analysis
-- **Accuracy**: 98%+
+- **Accuracy**: Nearly 80%(on test set)
 - **Categories**: Normal, Pneumonic
 - **Model**: GradientBoosting classifier
 
@@ -250,8 +249,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Team
 
-- **Parth Brijpuria** - Lead Developer & AI Engineer
-- **Contributors** - Open source community
+- **Parth Brijpuria**
+- **Moksh Palaresha**
+- **Paragi Agarwal**
+- **Nehee Parekh**
 
 ## 🙏 Acknowledgments
 
@@ -266,7 +267,7 @@ For support, email [support@ai-diagnostic-companion.com](mailto:support@ai-diagn
 
 ## 🔗 Links
 
-- **Live Demo**: [https://ai-diagnostic-companion.vercel.app](https://ai-diagnostic-companion.vercel.app)
+- **Live Demo**: [https://ai-diagnostic-companion.vercel.app](https://ai-diagnostic-companion.vercel.app)(however some features may not work in the demo live site)
 - **Documentation**: [https://github.com/ParthBrijpuria/ai-diagnostic-companion/wiki](https://github.com/ParthBrijpuria/ai-diagnostic-companion/wiki)
 - **Issues**: [https://github.com/ParthBrijpuria/ai-diagnostic-companion/issues](https://github.com/ParthBrijpuria/ai-diagnostic-companion/issues)
 
