@@ -45,7 +45,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<FindDoctorRes
     console.log(`🔍 Finding doctors for symptoms: ${symptoms} in city: ${city}`);
 
     // Use Gemini API to find doctors
-    const apiKey = "AIzaSyCA_d4JYpI22_300sPKPkKCkkBT2DE1DxI";
+    const apiKey = "AIzaSyDeZZoP13Q3ordTwXn9ytX5AUBf6YnMI7M";
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 

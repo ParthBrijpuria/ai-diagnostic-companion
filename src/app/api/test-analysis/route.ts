@@ -139,8 +139,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<TestAnalysisR
     // Use Gemini for final analysis and recommendations
     // Use Gemini Pro for other report analysis, Flash for others
     const apiKey = analysisData.modelType === 'other' 
-      ? "AIzaSyCL3I6-whCE00pi66zwO9VVnBvFl2_WI_0"  // Gemini Pro API key
-      : "AIzaSyCA_d4JYpI22_300sPKPkKCkkBT2DE1DxI"; // Gemini Flash API key
+      ? "AIzaSyDeZZoP13Q3ordTwXn9ytX5AUBf6YnMI7M"  // Gemini Pro API key
+      : "AIzaSyDeZZoP13Q3ordTwXn9ytX5AUBf6YnMI7M"; // Gemini Flash API key
     
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ 

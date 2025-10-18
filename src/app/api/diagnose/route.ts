@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     console.log("\n--- /api/diagnose endpoint was called ---");
 
     // Use the provided API key
-    const apiKey = "AIzaSyCA_d4JYpI22_300sPKPkKCkkBT2DE1DxI";
+    const apiKey = "AIzaSyDeZZoP13Q3ordTwXn9ytX5AUBf6YnMI7M";
     
     // Use real AI instead of mock data
     const useMockData = false;
