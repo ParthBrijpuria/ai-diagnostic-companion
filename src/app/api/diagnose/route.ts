@@ -23,7 +23,7 @@ interface RecommendedTest {
 interface ApiResponse {
     possible_diseases: Disease[];
     recommended_tests: RecommendedTest[];
-    next_step: string;
+    home_remedies: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
                         why: "A healthcare provider can properly assess your symptoms and provide appropriate care."
                     }
                 ],
-                next_step: "Please consult a healthcare professional for proper evaluation of your symptoms."
+                home_remedies: "Please consult a healthcare professional for proper evaluation of your symptoms."
             };
         } else {
             // Real Google Gemini AI integration
@@ -113,7 +113,7 @@ JSON STRUCTURE:
       "why": "Medical justification explaining what this test will help diagnose or rule out"
     }
   ],
-  "next_step": "Specific, actionable medical recommendation with clear urgency level and rationale"
+  "home_remedies": "Specific, actionable home remedies and natural treatments with clear instructions"
 }
 
 IMPORTANT REQUIREMENTS:
@@ -180,12 +180,12 @@ CLINICAL GUIDELINES:
                             why: "A healthcare provider can properly assess your symptoms and provide appropriate care."
                         }
                     ],
-                    next_step: "Please consult a healthcare professional for proper evaluation of your symptoms."
+                    home_remedies: "Please consult a healthcare professional for proper evaluation of your symptoms."
                 };
             }
 
             // Validate response structure
-            if (!parsedResponse.possible_diseases || !parsedResponse.recommended_tests || !parsedResponse.next_step) {
+            if (!parsedResponse.possible_diseases || !parsedResponse.recommended_tests || !parsedResponse.home_remedies) {
                 throw new Error("Invalid response structure from AI model");
             }
         }

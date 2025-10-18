@@ -25,7 +25,7 @@ interface TestAnalysisRequest {
 interface TestAnalysisResponse {
   disease_name: string;
   confidence: number;
-  future_steps: string;
+  home_remedies: string;
   top_medicines: Array<{
     name: string;
     description: string;
@@ -172,7 +172,7 @@ Provide ONLY valid JSON format with the following structure:
   "reasoning": "Detailed clinical reasoning based on all available data points, including symptom analysis, test result interpretation, and ML prediction correlation",
   "risk_level": "Low/Moderate/High/Critical with justification",
   "urgency": "Routine/Urgent/Emergent with timeline recommendations",
-  "future_steps": "Specific, actionable medical recommendations for next steps with timelines and priorities",
+  "home_remedies": "Specific, actionable home remedies and natural treatments with clear instructions",
   "top_medicines": [
     {
       "name": "Medicine Name",
@@ -220,7 +220,7 @@ QUALITY STANDARDS:
       parsedResponse = {
         disease_name: mlResult.predicted_disease,
         confidence: mlResult.confidence,
-        future_steps: "Please consult with a healthcare provider for proper diagnosis and treatment based on your test results.",
+        home_remedies: "Please consult with a healthcare provider for proper diagnosis and treatment based on your test results.",
         top_medicines: [],
         lifestyle_changes: "Maintain a healthy lifestyle with regular exercise and balanced nutrition. Follow your healthcare provider's recommendations.",
         analysis_type: analysisType,

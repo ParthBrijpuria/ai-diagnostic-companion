@@ -19,7 +19,7 @@ interface UploadedFile {
 interface ReportAnalysis {
   disease_name: string;
   confidence: number;
-  future_steps: string;
+  home_remedies: string;
   lifestyle_changes: string;
   top_medicines: Array<{ name: string; description: string }>;
 }
@@ -758,15 +758,15 @@ export default function ReportUpload() {
             </div>
           </div>
 
-          {/* Future Steps */}
-          {analysis.future_steps && (
+          {/* Home Remedies */}
+          {analysis.home_remedies && (
             <div className="mb-8">
               <h4 className="text-xl font-bold text-gray-800 mb-4">
-                Recommended Future Steps
+                Recommended Home Remedies
               </h4>
-              <div className="bg-blue-50 rounded-xl p-6 border border-blue-200">
-                <p className="text-blue-800 leading-relaxed">
-                  {analysis.future_steps}
+              <div className="bg-green-50 rounded-xl p-6 border border-green-200">
+                <p className="text-green-800 leading-relaxed">
+                  {analysis.home_remedies}
                 </p>
               </div>
             </div>

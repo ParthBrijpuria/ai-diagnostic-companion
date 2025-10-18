@@ -20,7 +20,7 @@ interface RecommendedTest {
 interface ApiResponse {
   possible_diseases: Disease[];
   recommended_tests: RecommendedTest[];
-  next_step: string;
+  home_remedies: string;
 }
 
 // --- SVG Icon Components ---
@@ -753,28 +753,28 @@ export default function DiagnosticPage() {
                   </div>
                 </div>
 
-                {/* Next Step */}
+                {/* Home Remedies */}
                 <div className="card-medical animate-slide-up">
                   <div className="flex items-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl flex items-center justify-center mr-6">
-                      <ClipboardIcon className="h-8 w-8 text-purple-600"/>
+                    <div className="w-16 h-16 bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mr-6">
+                      <HeartPlusIcon className="h-8 w-8 text-green-600"/>
                     </div>
                     <div>
                       <h3 className="text-2xl sm:text-3xl font-bold text-gray-800">
-                        Recommended Next Steps
+                        Recommended Home Remedies
                       </h3>
                       <p className="text-gray-600 mt-1">
-                        What you should do based on this analysis
+                        Natural remedies you can try at home
                       </p>
                     </div>
                   </div>
-                  <div className="p-8 bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 rounded-2xl border border-purple-200">
+                  <div className="p-8 bg-gradient-to-r from-green-50 via-emerald-50 to-teal-50 rounded-2xl border border-green-200">
                     <div className="flex items-start">
-                      <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
-                        <ForwardIcon className="h-4 w-4 text-white"/>
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-4 flex-shrink-0 mt-1">
+                        <HeartPlusIcon className="h-4 w-4 text-white"/>
                       </div>
                       <p className="text-xl text-gray-800 leading-relaxed font-medium">
-                        {result.next_step}
+                        {result.home_remedies}
                       </p>
                     </div>
                   </div>
